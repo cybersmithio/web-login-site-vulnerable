@@ -1,0 +1,30 @@
+sudo: required
+language: node_js
+env:
+  global:
+  - secure: PRNfjyHyu3cyDHuXc/hHhMtz/jfrmIhw3NzTTSMYRId5PahxlOIKz5znrVURwwpBI8g/kPfY+Okvv59b+VfbcjHYhWXKbz5VSOBJvGoC+GC6FxhyqTf2E+tgYsSctO7sBMZZuWDZu+c8Um5QyKmNBujM072NJ4v7C/h2ZDegTFWr+fGs0XeeLhQaOFwbT9OmXvMF5oPzpIY6io0Jpt67GQIS4kYquc6dwqxOedLFhJz8RuhPfCa04Uf9gitdX4Qv8Ki4bKoZWbGHS6Clx9fomkyAs+vSFQc3zcmrjWfqPpRVQuCw5e/OiGOJCYavI0IkkwCBRpTSlQnHG+IfiA5AN7JEGB03S2tn4PfomGZUTuoj3YKP8lQSWzWKOjfh6qvpeboHwR26MlViarQVuJM0v9S9rLII4cC9piMTqCV4UVka+P1o9fqfZ3+8ZPhMAtvrDcvgRBY+v8fgAG3sbAJaR1R86uJphrAWUiTCeDtmvSwqWhQNeZaZu++G0pxKW3EwAIIQ5NmAw2yvNpHHAiqPkvK6UVsiNW3SrEdlSf672iO60WXu9PJLuu3IeoITGEwKfGcMXvHzLMyCYzq5vUsNq6olsZklrGzvCUdBHSN0QbZCnHTo8b1zGZ48wdJsi2RDUdo3hsCKyWmFkE8b4QOuKnHNDj3R3yMoiLalj8iAZCo=
+  - secure: ep2IXNTGdq99vc3fxnKyTIkOdeFZRxUNNVNenlUt1LTg48GO0HuUlBULc2kigBP8nN8N/1ZO7Qh+5AXtk3FSDCY6XsXQnViYmoLQ8ZArBRg2cOcL6luFrmvMKGT2KdKUGT310Qqt9FNyFMO4XB53DQUUo+GQo3f2AhtpFTSEOfY0wkUbH7VQnJI9FwVGv9X0EMSm/e+kYnv/TjsuLNuHbukOpgi3b0ApwhXhFqD4uNl2PEhD7b9NZuCIi0X0DHWlBwC+KrsdKe7HZyLaR2E5FItWTQIsUW39o33mQeEyhn8KCNWylZ1yKgW97d8TanQoLhX/8xKsUdkWzp4ruUMtFUHCWRa88ursv0/zFcj0nI2bqfYR5wF4UnmTm2sJQdg+1DHGG6zGljMTv8iw2pj+auGkcEdECFsFHHcrvaC9K9IbAXIPJVqA8Ab4DjcxoaNz6yFBkMzmFmuGNsriCTRj+/s+H/WouaEvAcidOGCLT5wyvmjXhMqLJ5V/R00ChUDhWxaQZt+epTRcP4/llR7QmxBob0/uOBafxmiQJ5Ug/asOBIpJNNyJCzVVR9blV9SIqg6/IAC8CdYk4Jg7xFyFrP0FK4BkBnTX5fzlKR29DngqTaXD6JdzNWEEXXvmSJrUL0O1PRnaXA+ZtPw4a/t1QQpLAutka2IxPa1mvtx7utU=
+  - secure: OstO/kzErIvmlo/zVgUaQEdfvQQBAEGsT6nwn/DlTq2wjzgos1JYlCLUAO4CuxGH+uetx27a4VZvjjWMbhUjv2d5zeKj58+iaHniq5tk8HtDQsHr9GKDerxe2kSexuy4qmDxpPn4TZycaXj90WDA7hNY25kijxqw5tWAIbd+qAN6rnPOsqjquoUeizbTGkdkmXeJXOxnZDtBQ7c59s7T5GGBt9uUsj0JKCn1zeKv5Sy9x/ohAolGRjW3cPwOt2EL+aYDUOWxueQUdki7X/Vkduni07dzAEWlmh/mYYtgT/xMXcVvZc0IliOOyj/7IgJLzgtFw2WdjB3MnIqpQyYiyoCgXS2M3oqlVGHDifFfewbDuR9wO8YKu2CikPYxLtrxktONGnF4UqHrFxAnMKtk8tAVVRe2V5QC0qdPWPwkEpyjSyR36sRIEpAcKLUVDWcSQyQdiKNSrU8BegNbAtuOfKYLoa1W2xCMZYRNKrAUNyYYCoSn/9VFQxVgxLN1P0N7Kk/7NmGOV1ghg7P5zk5BX2iww2xROt3cqEaXf6MYkOXSyHAueDKdGnhChLNXMxBz1Z0qQmR/PCjRLKgeZaulvhjEl8AVoW7CEp9C9Ne93ZWG8D+vDmqXyb4yB6NEBw7V0mdBYn+Urwl3YJ/7jb5finX0zQjN648HjGPVArC6MSw=
+  - COMMIT=${TRAVIS_COMMIT::8}
+  - IMAGE=web-login-site
+  - REPO=web-login-site
+services:
+- docker
+before_install:
+- docker version
+- docker build -t $IMAGE .
+- docker images
+- docker run -dt -p 127.0.0.1:443:443 $IMAGE
+- docker ps -a
+- docker run $IMAGE /bin/sh -c "npm test"
+- docker login tenableio-docker-consec-local.jfrog.io -u pubread -p $TENABLE_JFROG_PASSWORD
+- docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
+- docker login -u $TENABLE_IO_ACCESS_KEY -p $TENABLE_IO_SECRET_KEY registry.cloud.tenable.com
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+
+script:
+- docker save $IMAGE | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TENABLE_IO_ACCESS_KEY -e TENABLE_SECRET_KEY=$TENABLE_IO_SECRET_KEY -e IMPORT_REPO_NAME=$REPO -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE:travis-$TRAVIS_BUILD_NUMBER
+- echo "Tests done!"
+
+after_success:
+- cat ./tiocs-check.sh | sh -s
