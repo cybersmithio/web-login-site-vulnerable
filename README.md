@@ -3,10 +3,10 @@ A basic Node.js website with an authenticated section.  This is to test web app 
 
 
 # Build instructions
-docker build -t web-login-site ./
+docker build -t web-login-site-vulnerable ./
 
 # To run directly on a Docker engine
-docker rm web-login-site1; docker run -it -p 443:443 --name=web-login-site1 web-login-site
+docker rm web-login-site1; docker run -it -p 443:443 --name=web-login-site1 web-login-site-vulnerable
 
 # Example of deployment to a Kubernetes cluster
 kubectl --kubeconfig ./kubernetes-admin.conf create -f yml/web-login-site-pod.yml

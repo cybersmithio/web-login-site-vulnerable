@@ -7,16 +7,16 @@
     "request": "*",
     "express-handlebars": "*",
     "body-parser": "*",
-    "passport": "*",
+    "passport": "0.4.0",
     "passport-local": "*",
     "cookie-parser": "*",
-    "cookies": "*",
+    "cookies": "0.7.2",
     "express-session": "*",
     "connect-mongo": "*",
     "connect": "*",
-    "mongoose": "*",
+    "mongoose": "5.5.2",
     "q": "*",
-    "express": "*"
+    "express": "4.12.1"
   },
   "test": "mocha --reporter list",
   "devDependencies": {
