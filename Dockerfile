@@ -1,7 +1,7 @@
 ### START OF DOCKERFILE FROM Node Jessie 10.6.0 build
 ### https://github.com/nodejs/docker-node/blob/master/10/jessie/Dockerfile
 ### https://github.com/nodejs/docker-node/blob/master/10/jessie/Dockerfile
-FROM node
+FROM node:10
 
 COPY html /usr/src/app
 
